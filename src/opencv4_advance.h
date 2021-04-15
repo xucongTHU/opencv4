@@ -10,7 +10,6 @@ public:
 	void image_operate(cv::Mat &img0, cv::Mat &img1);
 	void Threshold(cv::Mat &img);
 	void LookupTable(cv::Mat &img);
-	void img_concat(cv::Mat &img0, cv::Mat &img1);
 private:
 	cv::Mat image;
 };
