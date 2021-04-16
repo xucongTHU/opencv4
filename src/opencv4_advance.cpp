@@ -238,8 +238,4 @@ void opencv4_advance::LookupTable(cv::Mat &img)
 	cv::waitKey(0);
 }
 
-void opencv4_advance::img_concat(cv::Mat & img0, cv::Mat & img1)
-{
-
-}
 
