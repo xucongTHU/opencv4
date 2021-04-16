@@ -1,5 +1,5 @@
-# opencv4
-### OpenCV
+﻿# opencv4
+## OpenCV
 OpenCV是一个开源的计算机视觉库
 
 ## OpenCV模块
@@ -77,7 +77,7 @@ fps- 帧率
 size- 图像大小
 
 ## opencv数据类型
-# 基础类型-固定向量类Vec类
+### 基础类型-固定向量类Vec类
 cv::Vec<>，原语的容器类，即固定向量类
 有cv::Vec{2,3,4,6}{b,w,s,i,f,d}形式的声明，其中6种数据类型缩写的含义：
 b = unsigned char
@@ -87,7 +87,7 @@ i = int
 f = float
 d = double
 
-# 基础类型-Point类
+### 基础类型-Point类
 Point类通过类似于cv::Point2i和cv::Point3f等别名来实例化的，最后一个字母的原语(b是一个无符号字符，
 s是一个短整型，i是一个32位整型，f是一个32位浮点数，d是一个64位浮点数）
 Point类支持的操作
@@ -99,10 +99,10 @@ Point类支持的操作
 点乘		  - float x = p1.dot(p2);
 叉乘              - p1.cross(p2);
 
-# 基础类型-Scalar类
+### 基础类型-Scalar类
 cv::Scalar是四维点类。
 
-# 基础类型-size类
+### 基础类型-size类
 size类可以与Point类互相转换。区别在于：
 Point类的数据成员是x和y, 而size类种对应的成员是width和height.
 size类有3个别名，cv::Size, cv::Size2i, cv::Size2f. cv::Size和cv::Size2i是等价的，表示整数大小。最后一个是表示32位浮点大小。
@@ -114,7 +114,7 @@ size类支持的操作
 计算面积          - sz.area();
 size类不支持转换到固定向量类， Point类和固定向量类可以转换成size类
 
-# 基础类型-矩阵类Rect类
+### 基础类型-矩阵类Rect类
 矩阵类包含Point类的成员x和y(矩形左上角)和size类的成员width和height(矩形的大小)
 cv::Rect直接支持的操作
 默认构造函数       - cv::Rect r;
@@ -124,7 +124,7 @@ cv::Rect直接支持的操作
 由两个对角构造     - cv::Rect(p1, p2);
 成员访问           - r.x; r.y; r.width; r.height;
 计算面积           - r.area();
-# 基础类型-RotatedRect类
+### 基础类型-RotatedRect类
 cv::RotatedRect类包含一个中心点cv::Point2f、一个大小cv::Size2f和一个额外的角度float的容器
 其中浮点类型(float)的角度代表图形绕中心点旋转的角度。
 cv::RotatedRect是以中心为原点的，cv::Rect位于左上角为原点
@@ -135,7 +135,7 @@ cv::RotatedRect直接支持的操作
 值构造函数，point,
 size, angle        - cv::RotatedRect rr(p, sz, theta);
 成员访问           - rr.center, rr.size, rr.angle
-# 基础类型-固定矩阵类
+### 基础类型-固定矩阵类
 cv::Matx<>, 基础格式为cv::Matx{1,2,...}{1,2,...}{f,d}, 其中的数字可以是1到6之间的任何数，尾部的字母与之前的类型一样。
 cv::Matx支持的操作
 默认构造函数       - cv::Matx33f m33f;
