@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 {
 	
 	cv::Mat image;
-	image = cv::imread("D:/OrangePlan/ADAS/Algorithm/opencv4/data/lane.jpg");
+	image = cv::imread("D:/OrangePlan/ADAS/Algorithm/opencv4/data/lena.png");
 	if (image.empty())
 	{
 		std::cout << "请输入正确的图片" << std::endl;
@@ -49,8 +49,10 @@ int main(int argc, char** argv)
 	//opencv4_advance.mean_Stddev();
 	//opencv4_advance.image_operate(image, image1);
 	//opencv4_advance.Threshold(image);
-	opencv4_advance.LookupTable(image);
-
+	//opencv4_advance.LookupTable(image);
+	//opencv4_advance.img_concat();
+	//opencv4_advance.img_transform(image1);
+	opencv4_advance.img_rol(image, image1);
 	return 0;
 }
 

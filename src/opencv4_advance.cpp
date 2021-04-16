@@ -238,4 +238,74 @@ void opencv4_advance::LookupTable(cv::Mat &img)
 	cv::waitKey(0);
 }
 
+void opencv4_advance::img_concat()
+{
+	// 矩阵数组的横竖连接
+	cv::Mat matArray[] = { cv::Mat(1,2,CV_32FC1,cv::Scalar(1)),
+						   cv::Mat(1,2,CV_32FC1,cv::Scalar(2))};
+	cv::Mat vout, hout;
+	cv::vconcat(matArray, 2, vout);
+	cout << "图像数组竖向连接: " << endl << vout << endl;
+	cv::hconcat(matArray, 2, hout);
+	cout << "图像数组横向连接: " << endl << vout << endl;
+	// 矩阵的横竖拼接
+	cv::Mat A = (cv::Mat_<float>(2, 2) << 1, 7, 2, 8);
+	cv::Mat B = (cv::Mat_<float>(2, 2) << 4, 10, 5, 11);
+	cv::Mat vC, hC;
+	cv::vconcat(A, B, vC);
+	cv::hconcat(A, B, hC);
+	cout << "多个图像竖向连接: " << endl << vC << endl;
+	cout << "多个图像横向连接: " << endl << hC << endl;
+
+}
+
+void opencv4_advance::img_transform(cv::Mat &img)
+{
+	// 透视变换常用于机器视觉导航研究, 通过3x3的变换矩阵R进行透视变换
+	cv::Point2f src_points[4];
+	cv::Point2f dst_points[4];
+	// 通过Image Watch查看的二维码4个角点坐标
+	src_points[0] = cv::Point2f(94.0, 374.0);
+	src_points[1] = cv::Point2f(507.0, 380.0);
+	src_points[2] = cv::Point2f(1.0, 623.0);
+	src_points[3] = cv::Point2f(627.0, 627.0);
+	// 期望透视变换后二维码4个角点的坐标
+	dst_points[0] = cv::Point2f(0.0, 0.0);
+	dst_points[1] = cv::Point2f(627.0, 0.0);
+	dst_points[2] = cv::Point2f(0.0, 627.0);
+	dst_points[3] = cv::Point2f(627.0, 627.0);
+	cv::Mat Rotation, img_warp;
+	Rotation = cv::getPerspectiveTransform(src_points, dst_points);  // 计算透视变换矩阵
+	cv::warpPerspective(img, img_warp, Rotation, img.size());  // 透视变换投影
+	cv::imshow("img_warp", img_warp);
+	cv::waitKey(0);
+
+}
+
+void opencv4_advance::img_rol(cv::Mat & img0, cv::Mat & img1)
+{
+	// 感兴趣区域
+	cv::Mat ROI1, ROI2, ROI2_copy, mask, img2, img_copy, img_copy2;
+	cv::resize(img1, mask, cv::Size(200, 200));
+	img2 = img0; // 浅拷贝
+	// 深拷贝的两种方式
+	img0.copyTo(img_copy2);
+	cv::copyTo(img0, img_copy, img0);   // mask掩模矩阵中某一位置不为0,复制原图像相同位置的元素到新图像
+	// 两种在图中截取ROI的方式
+	cv::Rect rect(206, 206, 200, 200);
+	ROI1 = img0(rect);  // 截图
+	ROI2 = img0(cv::Range(300, 500), cv::Range(300, 500));  // 第二种截图方式
+	img0(cv::Range(300, 500), cv::Range(300, 500)).copyTo(ROI2_copy);  // 深拷贝
+	mask.copyTo(ROI1);
+	cv::imshow("加入noobcv后图像", img0);
+	cv::imshow("ROI对ROI2的影响", ROI2);
+	cv::imshow("深拷贝的ROI2_copy", ROI2_copy);
+	cv::circle(img0, cv::Point(300, 300), 20, cv::Scalar(0, 0, 255), -1);
+	cv::imshow("浅拷贝的img2", img2);
+	cv::imshow("深拷贝的img_copy", img_copy);
+	cv::imshow("深拷贝的img_copy2", img_copy2);
+	cv::imshow("画图对ROI1的影响", ROI1);
+	cv::waitKey(0);
+
+}
 
