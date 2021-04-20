@@ -52,7 +52,8 @@ int main(int argc, char** argv)
 	//opencv4_advance.LookupTable(image);
 	//opencv4_advance.img_concat();
 	//opencv4_advance.img_transform(image1);
-	opencv4_advance.img_rol(image, image1);
+	//opencv4_advance.img_rol(image, image1);
+	opencv4_advance.Pyramid(image);
 	return 0;
 }
 

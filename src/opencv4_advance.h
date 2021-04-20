@@ -13,6 +13,7 @@ public:
 	void img_concat();
 	void img_transform(cv::Mat &img);
 	void img_rol(cv::Mat &img0, cv::Mat &img1);
+	void Pyramid(cv::Mat &img);
 private:
 	cv::Mat image;
 };

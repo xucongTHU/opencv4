@@ -4,6 +4,7 @@
 using namespace std;
 void opencv4_advance::color_space(cv::Mat &img)
 {
+	// 图像颜色空间
 	cv::Mat gray, HSV, YUV, Lab, img32;
 	img.convertTo(img32, CV_32F, 1.0 / 255); // 将CV_8U类型转换为CV_32F类型
 	//img32.convertTo(img, CV_8U, 255);
@@ -306,6 +307,45 @@ void opencv4_advance::img_rol(cv::Mat & img0, cv::Mat & img1)
 	cv::imshow("深拷贝的img_copy2", img_copy2);
 	cv::imshow("画图对ROI1的影响", ROI1);
 	cv::waitKey(0);
+
+}
+
+void opencv4_advance::Pyramid(cv::Mat & img)
+{
+	// 高斯金字塔
+	vector<cv::Mat> Gauss, Lap;    // 高斯金字塔和拉普拉斯金字塔
+	int level = 3;
+	Gauss.push_back(img);          // 将原图作为高斯金字塔的第0层
+	// 构建高斯金字塔
+	for (int i = 0; i < level; i++) {
+		cv::Mat gauss;
+		cv::pyrDown(Gauss[i], gauss);   // 下采样
+		Gauss.push_back(gauss);
+	}
+
+	// 构建拉普拉斯金字塔
+	for (int i = Gauss.size() - 1; i > 0; i--) {
+		cv::Mat lap, upGauss;
+		if (i == Gauss.size() - 1) {
+			cv::Mat down;
+			cv::pyrDown(Gauss[i], down);  
+			cv::pyrUp(down, upGauss);      // 上采样
+			lap = Gauss[i] - upGauss;      // 第i层高斯图像与上采样图像的差值为拉普拉斯金字塔第i层图像
+			Lap.push_back(lap);            // 拉普拉斯第i层图像
+		}
+		cv::pyrUp(Gauss[i], upGauss);
+		lap = Gauss[i - 1] - upGauss;
+		Lap.push_back(lap);
+	}
+
+	// 查看两个图像金字塔中的图像
+	for (int i = 0; i < Gauss.size(); i++) {
+		string name = to_string(i);
+		cv::imshow("G" + name, Gauss[i]);
+		cv::imshow("L" + name, Lap[i]);
+	}
+	cv::waitKey(0);
+
 
 }
 
