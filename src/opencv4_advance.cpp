@@ -1,8 +1,14 @@
 #include "opencv4_advance.h"
+
+#include <iostream>
 #include <vector>
 
 using namespace std;
-void opencv4_advance::color_space(cv::Mat &img)
+
+namespace opencv4_advance {
+
+/* 图像的基本操作 */
+void opencv4_advance_operation::color_space(cv::Mat &img)
 {
 	// 图像颜色空间
 	cv::Mat gray, HSV, YUV, Lab, img32;
@@ -12,7 +18,7 @@ void opencv4_advance::color_space(cv::Mat &img)
 	cv::cvtColor(img32, YUV, cv::COLOR_BGR2YUV);
 	cv::cvtColor(img32, Lab, cv::COLOR_BGR2Lab);
 	cv::cvtColor(img32, gray, cv::COLOR_BGR2GRAY);
-	
+
 	cv::imshow("原图", img32);
 	cv::imshow("HSV", HSV);
 	cv::imshow("YUV", YUV);
@@ -21,7 +27,7 @@ void opencv4_advance::color_space(cv::Mat &img)
 	cv::waitKey(0);
 }
 
-void opencv4_advance::split_merge(cv::Mat &img)
+void opencv4_advance_operation::split_merge(cv::Mat &img)
 {
 	cv::Mat HSV;
 	cv::cvtColor(img, HSV, cv::COLOR_BGR2HSV);
@@ -62,7 +68,7 @@ void opencv4_advance::split_merge(cv::Mat &img)
 	cv::waitKey(0);
 }
 
-void opencv4_advance::find_Mat_minmax()
+void opencv4_advance_operation::find_Mat_minmax()
 {
 	float a[12] = { 1,2,3,4,5,6,7,8,9,10,0 };
 	cv::Mat img = cv::Mat(3, 4, CV_32FC1, a);
@@ -80,7 +86,7 @@ void opencv4_advance::find_Mat_minmax()
 	cout << "imgs中最小值是: " << minVal << " " << "在矩阵中位置: " << minIdx << endl;
 }
 
-void opencv4_advance::mean_Stddev()
+void opencv4_advance_operation::mean_Stddev()
 {
 	float a[12] = { 1,2,3,4,5,10,6,7,8,9,10,0 };
 	cv::Mat img = cv::Mat(3, 4, CV_32FC1, a);
@@ -102,7 +108,7 @@ void opencv4_advance::mean_Stddev()
 	cout << "imgs标准差=" << myStddevMat << endl;
 }
 
-void opencv4_advance::image_operate(cv::Mat & img0, cv::Mat & img1)
+void opencv4_advance_operation::image_operate(cv::Mat & img0, cv::Mat & img1)
 {
 	// 对两幅灰度图像进行比较计算
 	cv::Mat img0G, img1G, comMinG, comMaxG;
@@ -138,7 +144,7 @@ void opencv4_advance::image_operate(cv::Mat & img0, cv::Mat & img1)
 	cv::waitKey(0);
 }
 
-void opencv4_advance::Threshold(cv::Mat & img)
+void opencv4_advance_operation::Threshold(cv::Mat & img)
 {
 	cv::Mat gray;
 	cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
@@ -148,7 +154,7 @@ void opencv4_advance::Threshold(cv::Mat & img)
 	cv::threshold(img, img_B_V, 125, 255, cv::THRESH_BINARY_INV);
 	cv::imshow("img_B", img_B);
 	cv::imshow("img_B_V", img_B_V);
-	
+
 	//灰度图BINARY二值化, THRESH_BINARY大于maxVal, 为maxVal，其他值为0
 	cv::threshold(gray, gray_B, 125, 255, cv::THRESH_BINARY);
 	cv::threshold(gray, gray_B_V, 125, 255, cv::THRESH_BINARY_INV);
@@ -182,7 +188,7 @@ void opencv4_advance::Threshold(cv::Mat & img)
 
 }
 
-void opencv4_advance::LookupTable(cv::Mat &img)
+void opencv4_advance_operation::LookupTable(cv::Mat &img)
 {
 	// lut第一层
 	uchar lutFirst[256];
@@ -219,7 +225,7 @@ void opencv4_advance::LookupTable(cv::Mat &img)
 			lutThird[i] = 255;
 	}
 	cv::Mat lutThree(1, 256, CV_8UC1, lutThird);
-	
+
 	// 三通道的LUT矩阵
 	std::vector<cv::Mat> mergeMats;
 	mergeMats.push_back(lutOne);
@@ -239,11 +245,11 @@ void opencv4_advance::LookupTable(cv::Mat &img)
 	cv::waitKey(0);
 }
 
-void opencv4_advance::img_concat()
+void opencv4_advance_operation::img_concat()
 {
 	// 矩阵数组的横竖连接
 	cv::Mat matArray[] = { cv::Mat(1,2,CV_32FC1,cv::Scalar(1)),
-						   cv::Mat(1,2,CV_32FC1,cv::Scalar(2))};
+							cv::Mat(1,2,CV_32FC1,cv::Scalar(2)) };
 	cv::Mat vout, hout;
 	cv::vconcat(matArray, 2, vout);
 	cout << "图像数组竖向连接: " << endl << vout << endl;
@@ -260,7 +266,7 @@ void opencv4_advance::img_concat()
 
 }
 
-void opencv4_advance::img_transform(cv::Mat &img)
+void opencv4_advance_operation::img_transform(cv::Mat &img)
 {
 	// 透视变换常用于机器视觉导航研究, 通过3x3的变换矩阵R进行透视变换
 	cv::Point2f src_points[4];
@@ -283,7 +289,7 @@ void opencv4_advance::img_transform(cv::Mat &img)
 
 }
 
-void opencv4_advance::img_rol(cv::Mat & img0, cv::Mat & img1)
+void opencv4_advance_operation::img_rol(cv::Mat & img0, cv::Mat & img1)
 {
 	// 感兴趣区域
 	cv::Mat ROI1, ROI2, ROI2_copy, mask, img2, img_copy, img_copy2;
@@ -310,7 +316,7 @@ void opencv4_advance::img_rol(cv::Mat & img0, cv::Mat & img1)
 
 }
 
-void opencv4_advance::Pyramid(cv::Mat & img)
+void opencv4_advance_operation::Pyramid(cv::Mat & img)
 {
 	// 高斯金字塔
 	vector<cv::Mat> Gauss, Lap;    // 高斯金字塔和拉普拉斯金字塔
@@ -328,7 +334,7 @@ void opencv4_advance::Pyramid(cv::Mat & img)
 		cv::Mat lap, upGauss;
 		if (i == Gauss.size() - 1) {
 			cv::Mat down;
-			cv::pyrDown(Gauss[i], down);  
+			cv::pyrDown(Gauss[i], down);
 			cv::pyrUp(down, upGauss);      // 上采样
 			lap = Gauss[i] - upGauss;      // 第i层高斯图像与上采样图像的差值为拉普拉斯金字塔第i层图像
 			Lap.push_back(lap);            // 拉普拉斯第i层图像
@@ -346,6 +352,79 @@ void opencv4_advance::Pyramid(cv::Mat & img)
 	}
 	cv::waitKey(0);
 
+}
+
+/* 图像的滤波 */
+void opencv4_advance_imgfilter::img_filter(cv::Mat &img)
+{
+	// 图像卷积, 对图像模糊
+	/*
+	卷积步骤：
+	1. 卷积模板是中心对称的, 旋转180°
+	2. 卷积模板的中心放在需要计算卷积的像素上, 其余部分覆盖图像其他部分
+	3. 卷积模板的系数乘以对应图像的像素进行求和
+	4. 求取的和值放在图像与卷积模板中心点的像素处
+	5. 从左到右, 从上到下移动卷积模板, 重复2~4步
+	*/
+	// 待卷积矩阵
+	uchar points[25] = { 1,2,3,4,5,
+		6,7,8,9,10,
+		11,12,13,14,15,
+		16,17,18,19,20,
+		21,22,23,24,25 };
+	cv::Mat image(5, 5, CV_8UC1, points);
+	// 卷积模板
+	cv::Mat kernel = (cv::Mat_<float>(3, 3) << 1, 2, 1, 
+											   2, 0, 2, 
+											   1, 2, 1);
+	cv::Mat kernel_normal = kernel / 12;   // 卷积模板归一化, 防止卷积后像素越界
+	cv::Mat result, result_normal;
+	cv::filter2D(image, result, -1, kernel, cv::Point(-1, -1), 0, cv::BORDER_CONSTANT);
+	cv::filter2D(image, result_normal, -1, kernel_normal, cv::Point(-1, -1), 0, cv::BORDER_CONSTANT);
+	cout << "result: " << endl << result << endl;
+	cout << "result_normal: " << endl << result_normal << endl;
+
+	// 图像卷积
+	cv::Mat img_filter;
+	cv::filter2D(img, img_filter, -1, kernel_normal, cv::Point(-1, -1), 2, cv::BORDER_CONSTANT);
+	cv::imshow("img_filter", img_filter);
+	cv::imshow("lena", img);
+	cv::waitKey(0);
 
 }
 
+void opencv4_advance_imgfilter::img_noise(cv::Mat &img, int n)
+{
+	for (int k = 0; k < n / 2; k++) {
+		// 随机确定图像中的位置
+		int i, j;
+		i = cvflann::rand() % img.cols;
+		j = cvflann::rand() % img.rows;
+		int write_black = cvflann::rand() % 2;
+		if (write_black == 0) { // 添加白噪声
+			if (img.type() == CV_8UC1) {    // 处理灰度图像
+				img.at<uchar>(j, i) = 255;  // 白色噪声
+			}
+			else if (img.type() == CV_8UC3) {
+				img.at<cv::Vec3b>(j, i)[0] = 255;  // img指定通道[], B:0, G:1, R:2
+				img.at<cv::Vec3b>(j, i)[1] = 255;
+				img.at<cv::Vec3b>(j, i)[2] = 255;
+			}
+		}
+		else  // 添加白噪声
+		{
+			if (img.type() == CV_8UC1) {
+				img.at<uchar>(j, i) = 0;  // 白色噪声
+			}
+			else if (img.type() == CV_8UC3) {
+				img.at<cv::Vec3b>(j, i)[0] = 0;
+				img.at<cv::Vec3b>(j, i)[1] = 0;
+				img.at<cv::Vec3b>(j, i)[2] = 0;
+			}
+		}
+
+	}
+	cv::imshow("lena添加噪声", img);
+	cv::waitKey(0);
+}
+} // namespace opencv4_advance

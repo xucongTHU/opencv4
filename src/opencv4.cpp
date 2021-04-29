@@ -1,8 +1,10 @@
 #include "opencv4.h"
+
 #include <iostream>
 
 using namespace std;
-void opencv4::image_property()
+namespace opencv4_basic {
+void opencv4_basic::image_property()
 {
 	// cv::Mat img;
 	// 创建640行, 480列的3通道矩阵, 数据类型8-bit unsigned char
@@ -21,7 +23,7 @@ void opencv4::image_property()
 	cout << "数据类型 " << (img.elemSize() / img.channels()) * 8 << endl;
 }
 
-void opencv4::Mat_create()
+void opencv4_basic::Mat_create()
 {
 	// 1. Size(cols, rows)创建, 列在前，行在后
 	cv::Mat image(cv::Size(2, 3), CV_8UC3, cv::Scalar(1, 2, 3));
@@ -34,7 +36,7 @@ void opencv4::Mat_create()
 	std::cout << "Mat类的子类 " << std::endl << image2 << std::endl;
 }
 
-void opencv4::Mat_Value()
+void opencv4_basic::Mat_Value()
 {
 	// Mat类的赋值, Scalar变量的个数大于通道数, 超过部分不读取，小于通道数，以0补充
 	cv::Mat image(cv::Size(2, 3), CV_8UC3, cv::Scalar(1, 2, 3));
@@ -54,7 +56,7 @@ void opencv4::Mat_Value()
 	std::cout << "Mat元素添加 " << std::endl << m2 << std::endl;
 	*/
 	// Mat赋值
-	cv::Mat a = (cv::Mat_<int>(3,3) << 1, 2, 3, 4, 5, 6, 7, 8, 9);
+	cv::Mat a = (cv::Mat_<int>(3, 3) << 1, 2, 3, 4, 5, 6, 7, 8, 9);
 	cv::Mat b = (cv::Mat_<double>(2, 3) << 1.0, 2.1, 3.2, 4.0, 5.1, 6.2);
 	cout << "枚举法赋值a " << endl << a << endl;
 	cout << "枚举法赋值b " << endl << b << endl;
@@ -74,7 +76,7 @@ void opencv4::Mat_Value()
 
 }
 
-void opencv4::Mat_Operate()
+void opencv4_basic::Mat_Operate()
 {
 	// Mat类的加减乘除
 	cv::Mat a = (cv::Mat_<int>(3, 3) << 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -89,7 +91,7 @@ void opencv4::Mat_Operate()
 	cout << "Mat算术运算d= \n" << d << endl << "e= \n" << e << endl << "f= \n" << f << endl << "g= \n" << g << endl;
 }
 
-void opencv4::Mat_element()
+void opencv4_basic::Mat_element()
 {
 	// at方法读取Mat类矩阵元素
 	cv::Mat a = (cv::Mat_<uchar>(3, 3) << 1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -102,12 +104,12 @@ void opencv4::Mat_element()
 	int third = (int)vc3.val[2];
 	cout << "Mat " << endl << b << endl;
 	cout << "多通道Mat元素\n" << first << endl << second << endl << third << endl;
-	
+
 	// ptr方法读取Mat元素
 	for (int i = 0; i < b.rows; i++) {
 		uchar* ptr = b.ptr<uchar>(i);
 		for (int j = 0; j < b.cols*b.channels(); j++) {
-			printf("Ptr[%d][%d] = %d\n", i, j,(int)ptr[j]);
+			printf("Ptr[%d][%d] = %d\n", i, j, (int)ptr[j]);
 		}
 	}
 	// Ptr指针读取第2行第3个数
@@ -126,9 +128,9 @@ void opencv4::Mat_element()
 	cout << "Mat元素地址定位 " << element << endl;
 }
 
-void opencv4::video_Read()
+void opencv4_basic::video_Read()
 {
-	
+
 	cv::VideoCapture video(0);
 	while (true)
 	{
@@ -149,11 +151,11 @@ void opencv4::video_Read()
 		cv::imshow("video", frame_canny);
 		cv::waitKey(1000 / video.get(cv::CAP_PROP_FPS));
 		cout << "FPS: " << video.get(cv::CAP_PROP_FPS) << endl;
-		printf("width=%d, hight=%d\n", frame_gray.cols,frame_gray.rows);
+		printf("width=%d, hight=%d\n", frame_gray.cols, frame_gray.rows);
 	}
 }
 
-void opencv4::image_save()
+void opencv4_basic::image_save()
 {
 	cv::Mat img(480, 640, CV_8UC4);
 	CV_Assert(img.channels() == 4);
@@ -178,7 +180,7 @@ void opencv4::image_save()
 	cout << "保存成功" << endl;
 }
 
-void opencv4::video_save()
+void opencv4_basic::video_save()
 {
 	cv::Mat img;
 	cv::VideoCapture video(0);
@@ -224,7 +226,7 @@ void opencv4::video_save()
 
 }
 
-void opencv4::xml_yaml_save()
+void opencv4_basic::xml_yaml_save()
 {
 	// XML是元标记语言，YMAL是以数据为中心的语言
 	system("color F0");
@@ -290,3 +292,4 @@ void opencv4::xml_yaml_save()
 	fread.release();
 
 }
+} // namespace opencv4_basic

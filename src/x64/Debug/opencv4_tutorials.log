@@ -1,3 +1,0 @@
-﻿  opencv4_advance.cpp
-d:\orangeplan\adas\algorithm\opencv4\opencv4_tutorials\opencv4_tutorials\opencv4_tutorials\opencv4_advance.cpp(326): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  opencv4_tutorials.vcxproj -> D:\OrangePlan\ADAS\Algorithm\opencv4\opencv4_tutorials\opencv4_tutorials\x64\Debug\opencv4_tutorials.exe

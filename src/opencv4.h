@@ -1,6 +1,8 @@
 #pragma once
 #include <opencv2/opencv.hpp>
-class opencv4
+
+namespace opencv4_basic {
+class opencv4_basic
 {
 public:
 	cv::Mat image;
@@ -21,18 +23,11 @@ public:
 		cv::imshow("lena", img_private);
 		cv::waitKey(0);
 	}*/
-	friend void opencv(opencv4 opencv);   // 友元函数
+	//friend void opencv(opencv4_basic opencv);   // 友元函数
 private:
 	cv::Mat img_private;                  // 私有区域定义数据, 只能被类或友元函数访问
 };
 
 //public继承, 基类的public成员，派生类仍然是public, 基类的private成员不能被派生类访问
-class opencv4_test : public opencv4     
-{
-public:
-	void opencv4_test1(cv::Mat &img) {
-		image = img;
-		cv::imshow("test", image);
-		cv::waitKey(0);
-	}
-};
+
+}  // namespace opencv4_basic
